@@ -56,7 +56,7 @@ def generate_response_main():
     global historyCount
     if historyCount == 2:
         for i in range(1, len(history)):
-            if history[i] == 'U' and history[i + 1] == 's' and history[i + 2] == 'e' and history[i + 3] == 'r' and history[i + 4] == ':':
+            if history[i : i + 5] == "User:":
                 history = history[i:]
                 break
         historyCount -= 1
@@ -125,15 +125,18 @@ def get_movie_info(movie_title):
     elif len(results2) == 0:
         return json.dumps(results1[0])
     
-    if similarity(json.dumps(results1[0]["name"]).lower(), str(movie_title).lower()) >= similarity(json.dumps(results2[0]["title"]).lower(), str(movie_title).lower()):
+    if float(json.dumps(results1[0]["popularity"])) >= float(json.dumps(results2[0]["popularity"])):
+        return json.dumps(results1[0])
+    elif float(json.dumps(results1[0]["popularity"])) < float(json.dumps(results2[0]["popularity"])):
+        return json.dumps(results2[0]) 
+    elif similarity(json.dumps(results1[0]["name"]).lower(), str(movie_title).lower()) >= similarity(json.dumps(results2[0]["title"]).lower(), str(movie_title).lower()):
         return json.dumps(results1[0])
     else:
         return json.dumps(results2[0]) 
-
+    
 
 def generate_response_botImage(user_message):
-    response = generate_response(user_message, "botImage.txt")
-    result = generate_image(response)
+    result = generate_image(user_message)
     return result
 
 
@@ -213,13 +216,25 @@ def generate_response_botSimilar(user_message):
             movies = requests.get(f"https://api.themoviedb.org/3/tv/{movie_id}/similar?api_key={tmdb_api_key}").json()["results"]
         except:
             movies = []  
+    elif float(json.dumps(results1[0]["popularity"])) >= float(json.dumps(results2[0]["popularity"])):
+        try:
+            movie_id = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={tmdb_api_key}&query={title}").json()["results"][0]["id"]
+            movies = requests.get(f"https://api.themoviedb.org/3/tv/{movie_id}/similar?api_key={tmdb_api_key}").json()["results"]
+        except:
+            movies = [] 
+    elif float(json.dumps(results1[0]["popularity"])) < float(json.dumps(results2[0]["popularity"])):
+        try:
+            movie_id = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={tmdb_api_key}&query={title}").json()["results"][0]["id"]
+            movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={tmdb_api_key}").json()["results"]
+        except:
+            movies = [] 
     elif similarity(json.dumps(results1[0]["name"]).lower(), title.lower()) >= similarity(json.dumps(results2[0]["title"]).lower(), title.lower()):
         try:
             movie_id = requests.get(f"https://api.themoviedb.org/3/search/tv?api_key={tmdb_api_key}&query={title}").json()["results"][0]["id"]
             movies = requests.get(f"https://api.themoviedb.org/3/tv/{movie_id}/similar?api_key={tmdb_api_key}").json()["results"]
         except:
             movies = [] 
-    else:
+    else: 
         try:
             movie_id = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key={tmdb_api_key}&query={title}").json()["results"][0]["id"]
             movies = requests.get(f"https://api.themoviedb.org/3/movie/{movie_id}/similar?api_key={tmdb_api_key}").json()["results"]
@@ -250,7 +265,6 @@ def generate_response_botGenre(user_message):
         return response_anyway()
 
     genre = response.split('; ')
-
     for i in range(len(genre)):
         genre[i] = genreList[genre[i]]
     
