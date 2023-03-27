@@ -760,22 +760,24 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open("GET", "/get?msg=" + input, true);
 				xhr.onreadystatechange = function (){
-				botPhoto.innerHTML = '';
-				if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
-				{
-					response = xhr.responseText;
-					if (response[0] === 'h' && response[1] === 't' && response[2] === 't' && response[3] === 'p') {
-						botPhoto.className = "photo";
-						botPhoto.innerHTML = '<img src="' + response + '" class="photo">';
-						botText.remove();
-						setTimeout(function() {
+					botPhoto.innerHTML = '';
+					
+					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) 
+					{
+						response = xhr.responseText;
+						if (response[0] === 'h' && response[1] === 't' && response[2] === 't' && response[3] === 'p') {
+							botPhoto.className = "photo";
+							botPhoto.innerHTML = '<img src="' + response + '" class="photo">';
+							botText.remove();
+							setTimeout(function() {
+								messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
+							}, 2000);
 							messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
-						}, 2000);
+						}
+						else botText.innerHTML = `<span>${response}</span>`;
 						messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
 					}
-					else botText.innerHTML = `<span>${response}</span>`;
-					messagesContainer.scrollTop = messagesContainer.scrollHeight - messagesContainer.clientHeight;
-				}
+					
 				};
 				xhr.send();
 
@@ -803,7 +805,7 @@
 			}
 		});
 		if (words.length <= 4 && vietnameseCount >= 2) return false;
-		if (words.length > 4 && englishCount * 5 <= vietnameseCount) return false;
+		if (words.length > 4 && englishCount / 2 <= vietnameseCount / 3) return false;
 		return true;
 	}
 
