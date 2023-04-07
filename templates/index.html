@@ -804,8 +804,8 @@
 				englishCount++;
 			}
 		});
-		if (words.length <= 4 && vietnameseCount >= 2) return false;
-		if (words.length > 4 && englishCount / 2 <= vietnameseCount / 3) return false;
+		if (words.length <= 4 && vietnameseCount >= 1) return false;
+		if (vietnameseCount >= 2) return false;
 		return true;
 	}
 
