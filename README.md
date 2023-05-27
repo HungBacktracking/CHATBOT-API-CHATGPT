@@ -9,7 +9,7 @@ This is a Flask application that implements a chatbot that utilizes the GPT (Gen
 - Image generation using the DALL·E API.
 - User-friendly web interface built with Flask framework: The application is built using the Flask framework, which allows for easy deployment.
 
-<img src="./readme/demo.png>
+![Example Image](./readme/demo.png)
 
 
 ## Installation
