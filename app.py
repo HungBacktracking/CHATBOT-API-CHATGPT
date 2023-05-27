@@ -1,7 +1,4 @@
-from nltk.chat.util import Chat, reflections
 from flask import Flask, request, render_template
-import time
-import numpy as np
 import requests
 import json
 import config 
