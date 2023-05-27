@@ -1,6 +1,6 @@
 # Chatbot with GPT API
 
-This is a Flask application that implements a chatbot that utilizes the GPT (Generative Pre-trained Transformer) API to provide intelligent responses to user queries. The chatbot is integrated with The Movies Database API to ensure up-to-date knowledge about movies or tv-series, and it also incorporates the DALL·E API to generate images based on user description.
+This is a Flask application that implements a chatbot that utilizes the GPT (Generative Pre-trained Transformer) API of OpenAI to provide intelligent responses to user queries. The chatbot is integrated with The Movies Database API to ensure up-to-date knowledge about movies or tv-series, and it also incorporates the DALL·E API to generate images based on user description.
 
 ## Features
 
