@@ -34,6 +34,8 @@ $ pip install -r requirements.txt
 
 ## Usage
 
+Update the API Key of OpenAI and The Movie Database. 
+
 Start the Flask development server:
 
 ```
