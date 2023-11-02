@@ -365,7 +365,12 @@ def generate_image(user_message):
             "size":"256x256"
         },
     )
-    return response.json()["data"][0]["url"].strip()
+    
+    if response.ok:
+        result = response.json()["data"][0]["url"].strip()  
+        return result
+    else:
+        return "I'm sorry, I'm having trouble generating a response right now."
 
 def similarity(s1, s2):
     """
